@@ -1,16 +1,36 @@
-# POKEDEX
+## Projeto Pokedéx
 
-Nome dos integrantes: 
-- Pessoa 1
-- Pessoa 2
-- Pessoa 3
+### 🚀 Descrição do Projeto
+ A ideia é usar a Poke Api como fonte de dados para fazer uma Pokedéx. 
+ 
+### 📋 Funcionalidades
+- [x] Ver todos os Pokémon existentes
+- [x] Capturar os Pokémon que você quiser na sua Pokedéx
+- [x] Excluir os Pokémon da sua Pokedéx
+- [x] Ver os detalhes de cada Pokémon
+---
 
-Link do Surge: www.link.com.br
+## 🛠️ Tecnologias Utilizadas
 
-O que funciona:
-- Item 1
-- Item 2
+As seguintes ferramentas foram usadas na construção do projeto:
 
-O que não funciona: 
-- Item 3
-- Item 4
+- React
+- JavaScript
+- HTML
+- CSS
+- Git
+- Styled-Component
+- Api-Rest
+- Axios
+
+# Link 
+Para vizualizar o projeto é possível acesá-lo através do link a seguir:
+
+<a href="tedious-reading.surge.sh/" target="_blank">Link Surge</a>
+
+## ✒️ Autor
+
+## INTEGRANTE
+Perfil      | Link do perfil no GitHUB
+--------- | ------
+[<img src="https://avatars.githubusercontent.com/jrpovoa" width="75px;"/>](https://github.com/desenvolvedor1) |  [ Rodrigo Póvoa ](https://github.com/jrpovoa)
