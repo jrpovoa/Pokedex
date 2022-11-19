@@ -1,30 +1,33 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PokeCard from './PokeCard'
-import { Background, Header, InvisibleButton, LogoPokemon, PokedexButton, Title, MapContainer, LoadMoreButton, ModalContainer, Modal, Modal2, Modal2Delete, ModalDelete, ModalContainerDelete } from './StyledComponents/HomeStyled'
+import { Background, Title, MapContainer, ModalContainer, Modal, Modal2, Modal2Delete, ModalDelete, ModalContainerDelete, CloseButton, DarkContainer, LoadMoreButton } from './StyledComponents/HomeStyled'
+import { GlobalContext } from '../Global/GlobalContext'
+import Header from '../Global/Header/Header'
 
-export default function Home() {
+export const Context = createContext()
+
+const Home = () => {
     const navigate = useNavigate()
 
     const goToMyPokemon = () => {
         navigate("myPokemon")
     }
-    
+
+    const [details, setDetails] = useState('none')
+
     const [modal, setModal] = useState('none')
-    const changeModal = () => {
-        setModal('block')
-    }
     const closeModal = () => {
         setModal('none')
     }
 
-    const [modalDelete, setModalDelete] = useState('none')
-    const changeModalDelete = () => {
-        setModalDelete('block')
-    }
-    const closeModalDelete = () => {
-        setModal('none')
+    const { myPokemon, setMyPokemon } = useContext(GlobalContext)
+    const capturePokemon = (id) => {
+        let list = [...myPokemon]
+        list.push(id)
+        setMyPokemon([...new Set(list)])
+        setModal('block')
     }
 
     const [pokemon, setPokemon] = useState([]);
@@ -40,10 +43,10 @@ export default function Home() {
         }
         setPokemon(list)
     }
-    
+
     const getPokemon = async () => {
         axios
-            .get(await nextPage)
+            .get(nextPage)
             .then((response) => {
                 setPokemonList(response.data.results)
                 setNextPage(response.data.next)
@@ -54,36 +57,41 @@ export default function Home() {
             })
     }
 
+    const verifyPokemon = (id) => {
+        for (let index = 0; index < myPokemon.length; index++) {
+            if (myPokemon[index] === id) {
+                return true
+            }
+        }
+        return false
+    }
+
     useEffect(() => {
         getPokemon()
     }, [])
 
+    const pokemap = pokemon.map(index => {
+            return <PokeCard capturePokemon={capturePokemon} pokemon={index} key={index.id} verifyPokemon={verifyPokemon(index.id)} />
+        })
+    console.log(pokemon)
+
     return (
         <Background>
-            <Header>
-                <InvisibleButton>Voltar</InvisibleButton>
-                <LogoPokemon src={require('../img/pokemon.png')} />
-                <div>
-                    <PokedexButton onClick={goToMyPokemon}>Pokedéx</PokedexButton>
-                </div>
-            </Header>
-            <Title>Todos os Pokémon</Title>
+            <Header/>
             <MapContainer>
-                {pokemon.map(index => {
-                    return <PokeCard pokemon={index} key={index.id} />
-                })}
+                <Title>Todos os Pokémon</Title>
+                {pokemap}
             </MapContainer>
             <LoadMoreButton onClick={getPokemon}>Procurar mais Pokemon</LoadMoreButton>
-            <br></br>
-            <br></br>
-            <ModalContainer modal = {modal}>
+            <ModalContainer modal={modal}>
+                <DarkContainer>
                     <Modal>Gotcha!</Modal>
                     <Modal2>O Pokémon foi adicionado à sua Pokedéx</Modal2>
+                    <CloseButton onClick={closeModal}>Fechar</CloseButton>
+                </DarkContainer>
             </ModalContainer>
-            <ModalContainerDelete modalDelete={modalDelete}>
-                    <ModalDelete >Oh no!</ModalDelete>
-                    <Modal2Delete>O Pokémon foi removido da sua Pokedéx</Modal2Delete>
-            </ModalContainerDelete>
         </Background>
     )
 }
+
+export default Home
