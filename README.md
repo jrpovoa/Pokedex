@@ -26,7 +26,8 @@ As seguintes ferramentas foram usadas na construção do projeto:
 # Link 
 Para vizualizar o projeto é possível acesá-lo através do link a seguir:
 
-<a href="tedious-reading.surge.sh/" target="_blank">Link Surge</a>
+<a href="tedious-reading.surge.sh
+" target="_blank">Link Surge</a>
 
 ## ✒️ Autor
 
